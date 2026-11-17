@@ -3,53 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Precificação NT Store</title>
+<title>Preço de Venda NT Store</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap">
 <style>
-  /* Layout: ferramenta em faixas — premissas da loja, leitura do markup necessário, e o pedido (NF) com um cartão por item */
+  /* Layout: uma coluna, três passos numerados (nota, frete, lucro) e o preço final em destaque. Feito para o caixa. */
+  /* Cores da marca: troque estes valores se a NT Store tiver os códigos oficiais. */
   :root {
-    --bg: #f2f5f7;
+    --brand: #0b3a6e;        /* azul-marinho */
+    --brand-2: #1767c2;      /* azul */
+    --brand-soft: #e9f2fc;
+    --gold: #f4b400;         /* amarelo de destaque */
+    --gold-soft: #fff5d6;
+    --bg: #f3f6fa;
     --surface: #ffffff;
-    --surface-2: #edf1f4;
-    --line: #d8e0e6;
-    --fg: #14212b;
-    --muted: #5a6a77;
-    --accent: #0f5e6e;
-    --accent-soft: #e1eff2;
-    --accent-fg: #ffffff;
-    --ok: #1d7549;
-    --ok-soft: #e1f2e8;
-    --warn: #9a5a06;
-    --warn-soft: #fbefd9;
-    --bad: #b42318;
-    --bad-soft: #fbe5e2;
-    --seg-goods: #0f5e6e;
-    --seg-card: #c98329;
-    --seg-tax: #7a5aa6;
-    --seg-fixed: #708595;
-    --seg-profit: #2e9962;
+    --line: #d5dfea;
+    --fg: #10233a;
+    --muted: #5b6b7e;
+    --on-brand: #ffffff;
+    --ok: #18794e;
+    --bad: #c0261b;
+    --bad-soft: #fde7e4;
     --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-    --r: 12px;
-    --r-sm: 8px;
+    --font-num: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    --r: 16px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0e151a; --surface: #151e25; --surface-2: #1b262f; --line: #2a3843; --fg: #e5edf2; --muted: #93a3b0;
-      --accent: #5cbfce; --accent-soft: #15343a; --accent-fg: #062a30;
-      --ok: #62d09b; --ok-soft: #12321f; --warn: #f0b45a; --warn-soft: #382910; --bad: #ff8c80; --bad-soft: #3b1714;
-      --seg-goods: #3aa5b5; --seg-card: #dea24e; --seg-tax: #a88ad5; --seg-fixed: #7e92a2; --seg-profit: #4cc084;
+      --brand: #0f2f55; --brand-2: #6aa8f0; --brand-soft: #142a44;
+      --gold: #ffc83d; --gold-soft: #3a2f10;
+      --bg: #0b1420; --surface: #121e2c; --line: #263649; --fg: #e8eef5; --muted: #9aabbe;
+      --on-brand: #ffffff; --ok: #5fd29b; --bad: #ff8b80; --bad-soft: #3c1714;
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0e151a; --surface: #151e25; --surface-2: #1b262f; --line: #2a3843; --fg: #e5edf2; --muted: #93a3b0;
-    --accent: #5cbfce; --accent-soft: #15343a; --accent-fg: #062a30;
-    --ok: #62d09b; --ok-soft: #12321f; --warn: #f0b45a; --warn-soft: #382910; --bad: #ff8c80; --bad-soft: #3b1714;
-    --seg-goods: #3aa5b5; --seg-card: #dea24e; --seg-tax: #a88ad5; --seg-fixed: #7e92a2; --seg-profit: #4cc084;
+    --brand: #0f2f55; --brand-2: #6aa8f0; --brand-soft: #142a44;
+    --gold: #ffc83d; --gold-soft: #3a2f10;
+    --bg: #0b1420; --surface: #121e2c; --line: #263649; --fg: #e8eef5; --muted: #9aabbe;
+    --on-brand: #ffffff; --ok: #5fd29b; --bad: #ff8b80; --bad-soft: #3c1714;
     color-scheme: dark;
   }
 
@@ -59,770 +53,323 @@
     background: var(--bg);
     color: var(--fg);
     font-family: var(--font-ui);
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.45;
     -webkit-font-smoothing: antialiased;
-    padding-block: 24px 56px;
+    padding-block: 20px 48px;
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
   }
-  .wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
-  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
-  h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
-  h2 { font-size: 18px; font-weight: 600; }
-  h3 { font-size: 14px; font-weight: 600; }
-  p { margin: 0; }
-  .muted { color: var(--muted); }
-  .num { font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
 
-  /* Header */
-  .top { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
-  .top-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; max-width: 62ch; }
-  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
-  .btn {
-    font: inherit; font-size: 13px; font-weight: 600;
-    padding: 9px 14px; border-radius: var(--r-sm);
-    border: 1px solid var(--line); background: var(--surface); color: var(--fg);
-    cursor: pointer; transition: background .15s, border-color .15s;
+  header { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+    background: var(--brand); color: var(--on-brand);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-num); font-weight: 700; font-size: 18px;
+    border-bottom: 4px solid var(--gold);
   }
-  .btn:hover { border-color: var(--accent); }
-  .btn:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
-  .btn-primary:hover { filter: brightness(1.08); }
-  .btn-danger-armed { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
-  .btn-ghost { background: transparent; border-color: transparent; color: var(--muted); padding: 6px 8px; }
-  .btn-ghost:hover { color: var(--bad); border-color: transparent; }
+  h1 { margin: 0; font-family: var(--font-num); font-size: 22px; line-height: 1.2; text-wrap: balance; }
+  .sub { margin: 0; font-size: 14px; color: var(--muted); }
 
-  /* Section header */
-  .sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
-  .sec-head p { font-size: 13px; }
-
-  /* Premissas */
-  .prem-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-  @media (max-width: 920px) { .prem-grid { grid-template-columns: 1fr; } }
-  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-  .panel-note { font-size: 12px; color: var(--muted); }
-
-  .pay-list { display: flex; flex-direction: column; gap: 6px; }
-  .pay-opt {
-    display: grid; grid-template-columns: auto minmax(0, 1fr) 88px; align-items: center; gap: 10px;
-    padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer;
+  .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .step-head { display: flex; align-items: center; gap: 10px; }
+  .n {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    background: var(--brand-soft); color: var(--brand-2);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
   }
-  .pay-opt.sel { border-color: var(--accent); background: var(--accent-soft); }
-  .pay-opt input[type="radio"] { accent-color: var(--accent); margin: 0; }
-  .pay-label { font-size: 13px; font-weight: 500; line-height: 1.3; }
-  .pay-label small { display: block; font-size: 11.5px; color: var(--muted); font-weight: 400; }
+  .step-head h2 { margin: 0; font-size: 17px; font-weight: 700; }
 
-  .field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-  .field label, .field .lbl { font-size: 12px; font-weight: 600; color: var(--fg); }
-  .field .hint { font-size: 11.5px; color: var(--muted); font-weight: 400; }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-  @media (max-width: 460px) { .row3 { grid-template-columns: 1fr 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field label { font-size: 14px; font-weight: 600; }
+  .help { font-size: 13px; color: var(--muted); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
 
   .inp { position: relative; display: flex; align-items: center; }
-  .inp .pre, .inp .suf { position: absolute; font-size: 12px; font-weight: 600; color: var(--muted); pointer-events: none; }
-  .inp .pre { left: 10px; }
-  .inp .suf { right: 10px; }
-  input[type="text"], select {
-    width: 100%; font: inherit; font-size: 14px; font-weight: 500; color: var(--fg);
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-sm);
-    padding: 8px 10px; font-variant-numeric: tabular-nums;
+  .inp .pre, .inp .suf { position: absolute; font-weight: 600; color: var(--muted); pointer-events: none; font-size: 16px; }
+  .inp .pre { left: 14px; }
+  .inp .suf { right: 14px; }
+  input[type="text"] {
+    width: 100%; font: inherit; font-size: 20px; font-weight: 600; color: var(--fg);
+    background: var(--surface); border: 2px solid var(--line); border-radius: 12px;
+    padding: 12px 14px; font-variant-numeric: tabular-nums;
   }
-  .inp.has-pre input { padding-left: 32px; }
-  .inp.has-suf input { padding-right: 30px; }
-  .inp.sm input { padding-top: 6px; padding-bottom: 6px; font-size: 13px; text-align: right; }
-  .computed { font-size: 12px; color: var(--muted); }
-  .computed strong { color: var(--fg); font-variant-numeric: tabular-nums; }
+  .inp.pre-on input { padding-left: 46px; }
+  .inp.suf-on input { padding-right: 52px; }
+  input[type="text"]:focus { outline: none; border-color: var(--brand-2); box-shadow: 0 0 0 4px var(--brand-soft); }
+  .big input { font-size: 26px; padding-top: 14px; padding-bottom: 14px; }
 
-  /* Leitura */
-  .insight-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-  @media (max-width: 920px) { .insight-grid { grid-template-columns: 1fr; } }
-  .insight { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-  .insight.lead { background: var(--accent-soft); border-color: var(--accent); }
-  .insight .k { font-size: 12px; font-weight: 600; color: var(--muted); }
-  .insight.lead .k { color: var(--accent); }
-  .insight .v { font-family: var(--font-display); font-size: 32px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  .insight .s { font-size: 12.5px; color: var(--muted); }
-  .insight .s strong { color: var(--fg); }
+  .freight-out { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 14px; background: var(--brand-soft); border-radius: 12px; font-size: 15px; }
+  .freight-out strong { font-size: 18px; font-variant-numeric: tabular-nums; }
 
-  .comp { display: flex; flex-direction: column; gap: 8px; }
-  .comp-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; gap: 2px; background: var(--surface-2); }
-  .comp-seg { display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; font-variant-numeric: tabular-nums; transition: width .2s; }
-  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
-  .legend span { display: inline-flex; align-items: center; gap: 6px; }
-  .dot { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; }
+  .tabs button {
+    font: inherit; font-size: 15px; font-weight: 600; border: 0; border-radius: 9px; padding: 10px;
+    background: transparent; color: var(--muted); cursor: pointer;
+  }
+  .tabs button.on { background: var(--brand); color: var(--on-brand); }
 
-  /* Pedido */
-  .nf-bar { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; margin-bottom: 14px; }
-  @media (max-width: 820px) { .nf-bar { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 460px) { .nf-bar { grid-template-columns: 1fr; } }
-  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm); }
-  .seg button { font: inherit; font-size: 12.5px; font-weight: 600; border: 0; background: transparent; color: var(--muted); padding: 6px 8px; border-radius: 6px; cursor: pointer; }
-  .seg button.on { background: var(--surface); color: var(--accent); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .adjust { display: grid; grid-template-columns: 56px minmax(0, 1fr) 56px; gap: 8px; align-items: stretch; }
+  .adjust input { text-align: center; font-size: 26px; }
+  .pm {
+    font: inherit; font-size: 26px; font-weight: 700; border-radius: 12px; cursor: pointer;
+    border: 2px solid var(--line); background: var(--surface); color: var(--brand-2);
+  }
+  .pm:active { background: var(--brand-soft); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font: inherit; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; cursor: pointer;
+    border: 2px solid var(--line); background: var(--surface); color: var(--fg);
+  }
+  .chip.on { border-color: var(--brand-2); background: var(--brand-soft); color: var(--brand-2); }
+  .equiv { font-size: 14px; color: var(--muted); }
+  .equiv strong { color: var(--fg); }
 
-  .items { display: flex; flex-direction: column; gap: 12px; }
-  .item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); overflow: hidden; }
-  @media (max-width: 780px) { .item { grid-template-columns: 1fr; } }
-  .item-in { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-  .item-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; }
-  .item-name { font-weight: 600; }
-  .item-out { padding: 14px 16px; background: var(--surface-2); display: flex; flex-direction: column; gap: 10px; min-width: 0; border-left: 1px solid var(--line); }
-  @media (max-width: 780px) { .item-out { border-left: 0; border-top: 1px solid var(--line); } }
-  .out-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 10px; }
-  .price-k { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-  .price-v { font-family: var(--font-display); font-size: 28px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  .chip { font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
-  .chip.ok { background: var(--ok-soft); color: var(--ok); }
-  .chip.warn { background: var(--warn-soft); color: var(--warn); }
-  .chip.bad { background: var(--bad-soft); color: var(--bad); }
-  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-  @media (max-width: 460px) { .stats { grid-template-columns: 1fr 1fr; } }
-  .stat .sk { font-size: 11.5px; color: var(--muted); font-weight: 500; }
-  .stat .sv { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .stat .ss { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .note { font-size: 12.5px; padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
-  .note strong { color: var(--fg); }
-  .note.warn { background: var(--warn-soft); border-color: transparent; color: var(--warn); }
-  .note.warn strong { color: inherit; }
+  button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
-  .add-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  /* Resultado */
+  .result { background: var(--brand); color: var(--on-brand); border-radius: var(--r); padding: 22px 20px; display: flex; flex-direction: column; gap: 14px; border-bottom: 6px solid var(--gold); }
+  .result .k { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+  .result .price { font-family: var(--font-num); font-size: 56px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .result .exact { font-size: 14px; opacity: 0.85; }
+  .result .msg { font-size: 15px; background: rgba(255,255,255,0.12); padding: 10px 12px; border-radius: 10px; }
+  .breakdown { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px; font-size: 15px; }
+  .breakdown div { display: flex; justify-content: space-between; gap: 10px; }
+  .breakdown span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .breakdown .total { font-weight: 700; }
+  .breakdown .profit span:last-child { color: var(--gold); }
+  .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .btn {
+    font: inherit; font-size: 15px; font-weight: 700; padding: 13px; border-radius: 12px; cursor: pointer;
+    border: 2px solid transparent;
+  }
+  .btn-gold { background: var(--gold); color: #10233a; }
+  .btn-line { background: transparent; color: var(--on-brand); border-color: rgba(255,255,255,0.45); }
 
-  /* Totais */
-  .totals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; }
-  @media (max-width: 720px) { .totals { grid-template-columns: 1fr 1fr; } }
-  .totals .sv { font-size: 20px; font-family: var(--font-display); }
-
-  .method { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 8px; }
-  .method strong { color: var(--fg); }
-  .method ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; max-width: 90ch; }
-  .formula { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; background: var(--surface-2); padding: 2px 6px; border-radius: 4px; color: var(--fg); }
+  .tip { font-size: 14px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; }
+  .tip strong { color: var(--fg); }
 
   .toast {
-    position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-    background: var(--fg); color: var(--bg); padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 500;
-    opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; pointer-events: none; z-index: 20;
+    position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 8px);
+    background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 600;
+    opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none; z-index: 20;
   }
-  .toast.show { opacity: 1; transform: none; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
-<div class="wrap">
+<main class="wrap">
 
-  <header class="top">
-    <div class="top-text">
-      <span class="eyebrow">NT Store · Formação de preço</span>
-      <h1>Precificação NT Store</h1>
-      <p class="muted">Lance os itens da nota fiscal. A calculadora divide o frete pelo valor de cada item, desconta maquininha, impostos e despesas da loja, e mostra o preço que deixa lucro de verdade.</p>
-    </div>
-    <div class="actions">
-      <button type="button" class="btn" id="btn-reset">Restaurar exemplo</button>
-      <button type="button" class="btn btn-primary" id="btn-copy">Copiar resumo</button>
+  <header>
+    <div class="logo" aria-hidden="true">NT</div>
+    <div>
+      <h1>Preço de Venda NT Store</h1>
+      <p class="sub">Preencha os 3 passos. O preço aparece lá embaixo.</p>
     </div>
   </header>
 
-  <!-- PREMISSAS -->
-  <section aria-labelledby="h-prem">
-    <div class="sec-head">
-      <h2 id="h-prem">Premissas da loja</h2>
-      <p class="muted">Valem para todos os itens. Ficam salvas neste navegador.</p>
-    </div>
-    <div class="prem-grid">
-
-      <div class="panel">
-        <h3>Forma de recebimento usada no cálculo</h3>
-        <div class="pay-list" id="pay-list"></div>
-        <p class="panel-note">Taxas são médias de mercado estimadas (maquininha + antecipação). Troque pelos números do seu contrato quando tiver.</p>
-      </div>
-
-      <div class="panel">
-        <h3>Impostos e despesas da loja</h3>
-        <div class="row3">
-          <div class="field">
-            <label for="tax-livro">Livros / Bíblias</label>
-            <div class="inp has-suf sm"><input type="text" inputmode="decimal" id="tax-livro"><span class="suf">%</span></div>
-          </div>
-          <div class="field">
-            <label for="tax-natural">Prod. naturais</label>
-            <div class="inp has-suf sm"><input type="text" inputmode="decimal" id="tax-natural"><span class="suf">%</span></div>
-          </div>
-          <div class="field">
-            <label for="tax-outro">Outros</label>
-            <div class="inp has-suf sm"><input type="text" inputmode="decimal" id="tax-outro"><span class="suf">%</span></div>
-          </div>
-        </div>
-        <p class="panel-note">Impostos sobre a venda. Livros têm imunidade tributária; confirme as alíquotas com o contador.</p>
-        <div class="row2">
-          <div class="field">
-            <label for="fixed-monthly">Despesas fixas / mês</label>
-            <div class="inp has-pre"><span class="pre">R$</span><input type="text" inputmode="decimal" id="fixed-monthly"></div>
-          </div>
-          <div class="field">
-            <label for="revenue">Faturamento / mês</label>
-            <div class="inp has-pre"><span class="pre">R$</span><input type="text" inputmode="decimal" id="revenue"></div>
-          </div>
-        </div>
-        <p class="computed">Aluguel, salários, energia, sistema, contador. Pesam <strong id="fixed-pct">15,0%</strong> de cada venda.</p>
-      </div>
-
-      <div class="panel">
-        <h3>Metas de lucro</h3>
-        <div class="row2">
-          <div class="field">
-            <label for="target">Lucro líquido alvo</label>
-            <div class="inp has-suf"><input type="text" inputmode="decimal" id="target"><span class="suf">%</span></div>
-            <span class="hint">Usado no preço recomendado.</span>
-          </div>
-          <div class="field">
-            <label for="min-profit">Lucro mínimo</label>
-            <div class="inp has-suf"><input type="text" inputmode="decimal" id="min-profit"><span class="suf">%</span></div>
-            <span class="hint">Limite para descontos.</span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="base-markup">Markup atual dos produtos naturais</label>
-          <div class="inp has-suf"><input type="text" inputmode="decimal" id="base-markup"><span class="suf">x</span></div>
-          <span class="hint">Para comparar com o markup recomendado.</span>
-        </div>
-      </div>
-
+  <section class="step" aria-labelledby="s1">
+    <div class="step-head"><span class="n">1</span><h2 id="s1">Quanto o produto custou?</h2></div>
+    <div class="field">
+      <label for="in-cost">Valor de 1 unidade na nota fiscal</label>
+      <div class="inp pre-on big"><span class="pre">R$</span><input type="text" inputmode="decimal" id="in-cost" placeholder="0,00" autocomplete="off"></div>
     </div>
   </section>
 
-  <!-- LEITURA -->
-  <section aria-labelledby="h-read">
-    <div class="sec-head">
-      <h2 id="h-read">O que as premissas pedem</h2>
-      <p class="muted">Markups sobre o custo real (compra + frete rateado).</p>
-    </div>
-    <div class="insight-grid">
-      <div class="insight lead">
-        <span class="k">Markup recomendado · produtos naturais</span>
-        <span class="v" id="i-nat-mk">—</span>
-        <span class="s" id="i-nat-sub"></span>
-      </div>
-      <div class="insight">
-        <span class="k">Desconto mínimo na compra · livros</span>
-        <span class="v" id="i-book-disc">—</span>
-        <span class="s" id="i-book-sub"></span>
-      </div>
-      <div class="insight">
-        <span class="k">Markup recomendado · outros (jogos, presentes)</span>
-        <span class="v" id="i-out-mk">—</span>
-        <span class="s" id="i-out-sub"></span>
-      </div>
-    </div>
-    <div class="panel comp" style="margin-top: 14px;">
-      <h3 id="comp-title">Para onde vai cada R$ 100 vendidos em produto natural</h3>
-      <div class="comp-bar" role="img" id="comp-bar" aria-label="Composição do preço">
-        <div class="comp-seg" id="cs-goods" style="background: var(--seg-goods);"></div>
-        <div class="comp-seg" id="cs-card" style="background: var(--seg-card);"></div>
-        <div class="comp-seg" id="cs-tax" style="background: var(--seg-tax);"></div>
-        <div class="comp-seg" id="cs-fixed" style="background: var(--seg-fixed);"></div>
-        <div class="comp-seg" id="cs-profit" style="background: var(--seg-profit);"></div>
-      </div>
-      <div class="legend">
-        <span><i class="dot" style="background: var(--seg-goods);"></i>Mercadoria + frete <b class="num" id="cl-goods"></b></span>
-        <span><i class="dot" style="background: var(--seg-card);"></i>Maquininha <b class="num" id="cl-card"></b></span>
-        <span><i class="dot" style="background: var(--seg-tax);"></i>Impostos <b class="num" id="cl-tax"></b></span>
-        <span><i class="dot" style="background: var(--seg-fixed);"></i>Despesas fixas <b class="num" id="cl-fixed"></b></span>
-        <span><i class="dot" style="background: var(--seg-profit);"></i>Lucro <b class="num" id="cl-profit"></b></span>
-      </div>
-      <p class="panel-note" id="comp-note"></p>
-    </div>
-  </section>
-
-  <!-- PEDIDO -->
-  <section aria-labelledby="h-nf">
-    <div class="sec-head">
-      <h2 id="h-nf">Pedido / nota fiscal</h2>
-      <p class="muted" id="nf-tag">Exemplo. Substitua pelos itens da sua nota.</p>
-    </div>
-    <div class="nf-bar">
+  <section class="step" aria-labelledby="s2">
+    <div class="step-head"><span class="n">2</span><h2 id="s2">Frete da nota</h2></div>
+    <div class="row">
       <div class="field">
-        <label for="nf-frete">Frete total da NF</label>
-        <div class="inp has-pre"><span class="pre">R$</span><input type="text" inputmode="decimal" id="nf-frete"></div>
+        <label for="in-freight">Frete total</label>
+        <div class="inp pre-on"><span class="pre">R$</span><input type="text" inputmode="decimal" id="in-freight" placeholder="0,00" autocomplete="off"></div>
       </div>
       <div class="field">
-        <label for="nf-outros">Outros custos da NF</label>
-        <div class="inp has-pre"><span class="pre">R$</span><input type="text" inputmode="decimal" id="nf-outros"></div>
+        <label for="in-items">Itens na nota</label>
+        <div class="inp suf-on"><input type="text" inputmode="numeric" id="in-items" placeholder="0" autocomplete="off"><span class="suf">un.</span></div>
       </div>
-      <div class="field">
-        <span class="lbl">Rateio do frete</span>
-        <div class="seg" role="group" aria-label="Rateio do frete">
-          <button type="button" id="rat-valor" class="on">Por valor</button>
-          <button type="button" id="rat-qtd">Por unidade</button>
-        </div>
-      </div>
-      <p class="computed">Valor dos produtos: <strong id="nf-value">—</strong><br>Frete + outros: <strong id="nf-pct">—</strong> do valor</p>
     </div>
+    <p class="help">Some todas as unidades da nota, de todos os produtos. Sem frete, deixe em branco.</p>
+    <div class="freight-out"><span>Frete de cada unidade</span><strong id="out-freight-unit">R$ 0,00</strong></div>
+  </section>
 
-    <div class="items" id="items"></div>
-    <div class="add-row">
-      <button type="button" class="btn" data-add="livro">+ Livro / Bíblia</button>
-      <button type="button" class="btn" data-add="natural">+ Produto natural</button>
-      <button type="button" class="btn" data-add="outro">+ Outro item</button>
+  <section class="step" aria-labelledby="s3">
+    <div class="step-head"><span class="n">3</span><h2 id="s3">Lucro</h2></div>
+    <div class="tabs" role="group" aria-label="Como definir o lucro">
+      <button type="button" id="tab-markup" class="on">Markup</button>
+      <button type="button" id="tab-margin">Margem</button>
+    </div>
+    <div class="adjust">
+      <button type="button" class="pm" id="btn-minus" aria-label="Diminuir">−</button>
+      <div class="inp suf-on"><input type="text" inputmode="decimal" id="in-adjust" aria-label="Valor do lucro"><span class="suf" id="adj-suf">x</span></div>
+      <button type="button" class="pm" id="btn-plus" aria-label="Aumentar">+</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <p class="equiv" id="equiv"></p>
+  </section>
+
+  <section class="result" aria-live="polite" aria-labelledby="res-k">
+    <span class="k" id="res-k">Vender por</span>
+    <span class="price" id="out-price">R$ 0,00</span>
+    <span class="exact" id="out-exact"></span>
+    <div class="msg" id="out-msg" hidden></div>
+    <div class="breakdown" id="breakdown">
+      <div><span>Produto (nota)</span><span id="b-cost">R$ 0,00</span></div>
+      <div><span>+ Frete por unidade</span><span id="b-freight">R$ 0,00</span></div>
+      <div class="total"><span>= Custo de cada unidade</span><span id="b-total">R$ 0,00</span></div>
+      <div class="profit"><span>Lucro em cada venda</span><span id="b-profit">R$ 0,00</span></div>
+    </div>
+    <div class="btns">
+      <button type="button" class="btn btn-gold" id="btn-copy">Copiar preço</button>
+      <button type="button" class="btn btn-line" id="btn-next">Próximo produto</button>
     </div>
   </section>
 
-  <!-- TOTAIS -->
-  <section aria-labelledby="h-tot">
-    <div class="sec-head"><h2 id="h-tot">Resultado do pedido</h2><p class="muted">Se tudo for vendido pelo preço mostrado em cada item.</p></div>
-    <div class="totals">
-      <div class="stat"><div class="sk">Venda total</div><div class="sv" id="t-rev">—</div></div>
-      <div class="stat"><div class="sk">Custo real (CMV)</div><div class="sv" id="t-cost">—</div></div>
-      <div class="stat"><div class="sk">Maquininha + impostos + fixas</div><div class="sv" id="t-ded">—</div></div>
-      <div class="stat"><div class="sk">Lucro líquido</div><div class="sv" id="t-profit">—</div><div class="ss" id="t-margin"></div></div>
-    </div>
-  </section>
+  <p class="tip"><strong>Livros e Bíblias:</strong> vendemos pelo preço de capa da editora. Use esta calculadora para os outros produtos.<br><strong>Próximo produto</strong> limpa só o valor do produto. O frete da mesma nota continua preenchido.</p>
 
-  <section class="method" aria-labelledby="h-met">
-    <h3 id="h-met" style="color: var(--fg);">Como o cálculo funciona</h3>
-    <ul>
-      <li><strong>Custo real</strong> = custo na NF + parte do frete e outros custos. No rateio por valor, cada item recebe frete proporcional ao que custou, então uma Bíblia de R$ 55 não carrega o mesmo frete que um chá de R$ 8.</li>
-      <li><strong>Preço recomendado</strong> = <span class="formula">custo real ÷ (1 − maquininha − impostos − fixas − lucro alvo)</span>, arredondado para cima no próximo ,90. Assim as taxas entram no preço e não comem o lucro.</li>
-      <li><strong>Livros</strong> são vendidos pelo preço de capa. A calculadora mostra o lucro que sobra e o desconto mínimo que a loja precisa conseguir na editora para bater a meta.</li>
-      <li><strong>Desconto máximo</strong> é quanto dá para baixar o preço até o lucro chegar no mínimo definido.</li>
-      <li><strong>Lucro líquido</strong> aqui já desconta as despesas fixas proporcionais. Lucro zero significa que a venda pagou a mercadoria, as taxas e a sua parte das contas da loja.</li>
-    </ul>
-  </section>
-
-</div>
+</main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function () {
-  const KEY = 'ntstore-precificacao-v1';
-  const PAY = [
-    { id: 'parc10', label: 'Parcelado até 10x, recebendo em 15 dias', hint: 'Pior caso. Taxa do parcelado + antecipação.' },
-    { id: 'cred', label: 'Crédito à vista', hint: '' },
-    { id: 'prazo', label: 'A prazo 15 ddl (boleto, igrejas)', hint: 'Custo do boleto e do dinheiro parado.' },
-    { id: 'deb', label: 'Débito', hint: '' },
-    { id: 'pix', label: 'Pix', hint: '' }
-  ];
-  const CATS = { livro: 'Livro / Bíblia', natural: 'Produto natural', outro: 'Outro' };
+  // Padrões da loja (o gerente pode mudar aqui)
+  const PADRAO = { markup: 1.6, margem: 40 };
+  const MARKUP_ATALHOS = [1.5, 1.6, 1.8, 2.0];
+  const MARGEM_ATALHOS = [30, 35, 40, 45, 50];
+  const KEY = 'ntstore-preco-caixa-v1';
 
-  const uid = () => Math.random().toString(36).slice(2, 9);
-
-  function example() {
-    return {
-      isExample: true,
-      pay: { method: 'parc10', rates: { parc10: 13, cred: 3.5, prazo: 2, deb: 1.5, pix: 0.5 } },
-      tax: { livro: 0, natural: 6, outro: 6 },
-      fixedMonthly: 6000,
-      revenue: 40000,
-      target: 10,
-      minProfit: 0,
-      baseMarkup: 1.6,
-      nf: { frete: 211.77, outros: 0, rateio: 'valor' },
-      items: [
-        { id: uid(), name: 'Bíblia (exemplo)', cat: 'livro', qty: 3, cost: 55.64, price: 109.9 },
-        { id: uid(), name: 'Livro devocional (exemplo)', cat: 'livro', qty: 10, cost: 32.9, price: 59.9 },
-        { id: uid(), name: 'Jogo Beeel! (exemplo)', cat: 'outro', qty: 2, cost: 64, price: 0 },
-        { id: uid(), name: 'Granola 1 kg (exemplo)', cat: 'natural', qty: 12, cost: 18.5, price: 0 },
-        { id: uid(), name: 'Chá misto 30 g (exemplo)', cat: 'natural', qty: 20, cost: 7.8, price: 0 }
-      ]
-    };
-  }
-
-  function load() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return null;
-      const s = JSON.parse(raw);
-      if (!s || !Array.isArray(s.items) || !s.pay || !s.tax || !s.nf) return null;
-      return s;
-    } catch (e) { return null; }
-  }
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* sem armazenamento: segue sem salvar */ }
-  }
-
-  let S = load() || example();
-
-  // ---------- formatação ----------
+  const el = (id) => document.getElementById(id);
   const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-  const brl = (n) => (isFinite(n) ? BRL.format(n) : '—');
-  const pct = (n, d = 1) => (isFinite(n) ? n.toFixed(d).replace('.', ',') + '%' : '—');
-  const mk = (n) => (isFinite(n) && n > 0 ? n.toFixed(2).replace('.', ',') + 'x' : '—');
-  const fmtIn = (n, d = 2) => (isFinite(n) && n !== 0 ? Number(n).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: d, useGrouping: false }) : (n === 0 ? '0' : ''));
+  const brl = (n) => BRL.format(isFinite(n) ? n : 0);
+  const dec = (n, d) => n.toFixed(d).replace('.', ',');
   function num(v) {
-    if (typeof v === 'number') return isFinite(v) ? v : 0;
-    let s = String(v == null ? '' : v).trim().replace(/[^\d.,-]/g, '');
+    let s = String(v == null ? '' : v).trim().replace(/[^\d.,]/g, '');
     if (!s) return 0;
     if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
     const n = parseFloat(s);
     return isFinite(n) ? n : 0;
   }
-  function roundUp90(x) {
-    if (!isFinite(x) || x <= 0) return x;
+  // Arredonda sempre para cima, terminando em ,90
+  function preco90(x) {
+    if (!(x > 0)) return 0;
     const n = Math.floor(x);
     let c = n + 0.9;
     if (c < x - 1e-9) c += 1;
     return Math.round(c * 100) / 100;
   }
-  const el = (id) => document.getElementById(id);
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  // ---------- cálculo ----------
-  function ctx() {
-    const fee = num(S.pay.rates[S.pay.method]);
-    const rev = num(S.revenue);
-    const fixed = rev > 0 ? (num(S.fixedMonthly) / rev) * 100 : 0;
-    let sumValue = 0, sumQty = 0;
-    S.items.forEach((it) => {
-      const q = Math.max(1, Math.round(num(it.qty)));
-      sumValue += Math.max(0, num(it.cost)) * q;
-      sumQty += q;
-    });
-    const extras = Math.max(0, num(S.nf.frete)) + Math.max(0, num(S.nf.outros));
-    return { fee, fixed, sumValue, sumQty, extras, extrasPct: sumValue > 0 ? (extras / sumValue) * 100 : 0 };
-  }
-  function varShare(cat, c) {
-    return (c.fee + num(S.tax[cat]) + c.fixed) / 100;
-  }
-  function calc(it, c) {
-    const qty = Math.max(1, Math.round(num(it.qty)));
-    const cost = Math.max(0, num(it.cost));
-    const ref = Math.max(0, num(it.price));
-    const rateio = S.nf.rateio === 'valor'
-      ? (c.sumValue > 0 ? c.extras * cost / c.sumValue : 0)
-      : (c.sumQty > 0 ? c.extras / c.sumQty : 0);
-    const real = cost + rateio;
-    const v = varShare(it.cat, c);
-    const t = num(S.target) / 100;
-    const m = num(S.minProfit) / 100;
-    const dT = 1 - v - t;
-    const recommended = dT > 0.01 ? roundUp90(real / dT) : NaN;
-    const price = ref > 0 ? ref : recommended;
-    const source = ref > 0 ? (it.cat === 'livro' ? 'capa' : 'atual') : 'recomendado';
-    const profitU = isFinite(price) ? price * (1 - v) - real : NaN;
-    const margin = price > 0 ? profitU / price : NaN;
-    const dM = 1 - v - m;
-    const minPrice = dM > 0.01 ? real / dM : NaN;
-    const maxDisc = price > 0 && isFinite(minPrice) ? 1 - minPrice / price : NaN;
-    const base = Math.max(1, num(S.baseMarkup));
-    const pBase = real * base;
-    const mBase = pBase > 0 ? (pBase * (1 - v) - real) / pBase : NaN;
-    let buyDisc = NaN, needDisc = NaN;
-    if (ref > 0) {
-      buyDisc = 1 - cost / ref;
-      const costMax = ref * dT - rateio;
-      needDisc = 1 - costMax / ref;
+  const S = { mode: 'markup', markup: PADRAO.markup, margem: PADRAO.margem };
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (saved) {
+      if (saved.mode === 'margin' || saved.mode === 'markup') S.mode = saved.mode;
+      if (saved.markup >= 1) S.markup = saved.markup;
+      if (saved.margem > 0 && saved.margem < 95) S.margem = saved.margem;
+      if (saved.freight) el('in-freight').value = saved.freight;
+      if (saved.items) el('in-items').value = saved.items;
     }
-    let status = 'ok';
-    if (!isFinite(margin) || margin < -0.0005) status = 'bad';
-    else if (margin < t - 0.0005) status = 'warn';
-    return { qty, cost, ref, rateio, real, v, recommended, price, source, profitU, margin, minPrice, maxDisc, pBase, mBase, buyDisc, needDisc, status, effMk: real > 0 ? price / real : NaN };
+  } catch (e) { /* sem armazenamento: usa os padrões */ }
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ mode: S.mode, markup: S.markup, margem: S.margem, freight: el('in-freight').value, items: el('in-items').value }));
+    } catch (e) { /* ignora */ }
   }
 
-  // ---------- premissas: render e binding ----------
-  function renderPay() {
-    el('pay-list').innerHTML = PAY.map((p) => `
-      <label class="pay-opt${S.pay.method === p.id ? ' sel' : ''}" data-pay="${p.id}">
-        <input type="radio" name="pay" value="${p.id}" id="pay-${p.id}"${S.pay.method === p.id ? ' checked' : ''}>
-        <span class="pay-label">${esc(p.label)}${p.hint ? `<small>${esc(p.hint)}</small>` : ''}</span>
-        <span class="inp has-suf sm"><input type="text" inputmode="decimal" id="rate-${p.id}" data-rate="${p.id}" value="${fmtIn(num(S.pay.rates[p.id]))}" aria-label="Taxa ${esc(p.label)}"><span class="suf">%</span></span>
-      </label>`).join('');
+  function current() { return S.mode === 'markup' ? S.markup : S.margem; }
+  function showAdjust() {
+    const isMk = S.mode === 'markup';
+    el('tab-markup').classList.toggle('on', isMk);
+    el('tab-margin').classList.toggle('on', !isMk);
+    el('adj-suf').textContent = isMk ? 'x' : '%';
+    el('in-adjust').value = isMk ? dec(S.markup, 2) : dec(S.margem, 0);
+    const list = isMk ? MARKUP_ATALHOS : MARGEM_ATALHOS;
+    el('chips').innerHTML = list.map((v) => {
+      const label = isMk ? dec(v, 2) + 'x' : v + '%';
+      const padrao = (isMk ? PADRAO.markup : PADRAO.margem) === v ? ' (padrão)' : '';
+      return `<button type="button" class="chip" data-v="${v}">${label}${padrao}</button>`;
+    }).join('');
+    markChips();
   }
-  el('pay-list').addEventListener('change', (e) => {
-    if (e.target.name === 'pay') {
-      S.pay.method = e.target.value;
-      document.querySelectorAll('.pay-opt').forEach((n) => n.classList.toggle('sel', n.dataset.pay === S.pay.method));
-      updateAll();
-    }
-  });
-  el('pay-list').addEventListener('input', (e) => {
-    const id = e.target.dataset.rate;
-    if (id) { S.pay.rates[id] = num(e.target.value); updateAll(); }
-  });
-
-  const simple = [
-    ['tax-livro', () => S.tax.livro, (v) => { S.tax.livro = v; }],
-    ['tax-natural', () => S.tax.natural, (v) => { S.tax.natural = v; }],
-    ['tax-outro', () => S.tax.outro, (v) => { S.tax.outro = v; }],
-    ['fixed-monthly', () => S.fixedMonthly, (v) => { S.fixedMonthly = v; }],
-    ['revenue', () => S.revenue, (v) => { S.revenue = v; }],
-    ['target', () => S.target, (v) => { S.target = v; }],
-    ['min-profit', () => S.minProfit, (v) => { S.minProfit = v; }],
-    ['base-markup', () => S.baseMarkup, (v) => { S.baseMarkup = v; }],
-    ['nf-frete', () => S.nf.frete, (v) => { S.nf.frete = v; }],
-    ['nf-outros', () => S.nf.outros, (v) => { S.nf.outros = v; }]
-  ];
-  function fillSimple() {
-    simple.forEach(([id, get]) => { el(id).value = fmtIn(num(get())); });
-    el('rat-valor').classList.toggle('on', S.nf.rateio === 'valor');
-    el('rat-qtd').classList.toggle('on', S.nf.rateio !== 'valor');
-  }
-  simple.forEach(([id, , set]) => {
-    el(id).addEventListener('input', (e) => { set(num(e.target.value)); updateAll(); });
-  });
-  el('rat-valor').addEventListener('click', () => { S.nf.rateio = 'valor'; fillSimple(); updateAll(); });
-  el('rat-qtd').addEventListener('click', () => { S.nf.rateio = 'qtd'; fillSimple(); updateAll(); });
-
-  // ---------- itens ----------
-  function priceLabel(cat) { return cat === 'livro' ? 'Preço de capa' : 'Preço atual (opcional)'; }
-  function itemHTML(it) {
-    const opts = Object.entries(CATS).map(([k, v]) => `<option value="${k}"${it.cat === k ? ' selected' : ''}>${v}</option>`).join('');
-    return `
-    <article class="item" data-id="${it.id}">
-      <div class="item-in">
-        <div class="item-head">
-          <input type="text" class="item-name" id="nm-${it.id}" data-f="name" value="${esc(it.name)}" aria-label="Nome do item" placeholder="Nome do produto">
-          <button type="button" class="btn btn-ghost" data-remove="${it.id}" aria-label="Remover item">Remover</button>
-        </div>
-        <div class="field">
-          <label for="ct-${it.id}">Categoria</label>
-          <select id="ct-${it.id}" data-f="cat">${opts}</select>
-        </div>
-        <div class="row3">
-          <div class="field">
-            <label for="qt-${it.id}">Qtd.</label>
-            <div class="inp has-suf"><input type="text" inputmode="numeric" id="qt-${it.id}" data-f="qty" value="${fmtIn(num(it.qty), 0)}"><span class="suf">un.</span></div>
-          </div>
-          <div class="field">
-            <label for="cs-${it.id}">Custo unit. NF</label>
-            <div class="inp has-pre"><span class="pre">R$</span><input type="text" inputmode="decimal" id="cs-${it.id}" data-f="cost" value="${fmtIn(num(it.cost))}"></div>
-          </div>
-          <div class="field">
-            <label for="pr-${it.id}" class="o-plabel">${priceLabel(it.cat)}</label>
-            <div class="inp has-pre"><span class="pre">R$</span><input type="text" inputmode="decimal" id="pr-${it.id}" data-f="price" value="${num(it.price) > 0 ? fmtIn(num(it.price)) : ''}" placeholder="—"></div>
-          </div>
-        </div>
-      </div>
-      <div class="item-out">
-        <div class="out-top">
-          <div>
-            <div class="price-k o-pk">Preço de venda</div>
-            <div class="price-v o-price">—</div>
-          </div>
-          <span class="chip o-chip">—</span>
-        </div>
-        <div class="stats">
-          <div class="stat"><div class="sk">Custo real</div><div class="sv o-real">—</div><div class="ss o-split"></div></div>
-          <div class="stat"><div class="sk">Lucro / un.</div><div class="sv o-profit">—</div><div class="ss o-margin"></div></div>
-          <div class="stat"><div class="sk">Desconto máx.</div><div class="sv o-disc">—</div><div class="ss o-minp"></div></div>
-        </div>
-        <div class="note o-note"></div>
-      </div>
-    </article>`;
-  }
-  function renderItems() {
-    el('items').innerHTML = S.items.map(itemHTML).join('');
-  }
-  el('items').addEventListener('input', (e) => {
-    const card = e.target.closest('.item');
-    const f = e.target.dataset.f;
-    if (!card || !f || f === 'cat') return;
-    const it = S.items.find((x) => x.id === card.dataset.id);
-    if (!it) return;
-    it[f] = f === 'name' ? e.target.value : num(e.target.value);
-    markEdited();
-    updateAll();
-  });
-  el('items').addEventListener('change', (e) => {
-    if (e.target.dataset.f !== 'cat') return;
-    const card = e.target.closest('.item');
-    const it = S.items.find((x) => x.id === card.dataset.id);
-    if (!it) return;
-    it.cat = e.target.value;
-    card.querySelector('.o-plabel').textContent = priceLabel(it.cat);
-    markEdited();
-    updateAll();
-  });
-  el('items').addEventListener('click', (e) => {
-    const id = e.target.dataset.remove;
-    if (!id) return;
-    S.items = S.items.filter((x) => x.id !== id);
-    markEdited();
-    renderItems();
-    updateAll();
-  });
-  document.querySelectorAll('[data-add]').forEach((b) => b.addEventListener('click', () => {
-    const cat = b.dataset.add;
-    const it = { id: uid(), name: '', cat, qty: 1, cost: 0, price: 0 };
-    S.items.push(it);
-    markEdited();
-    renderItems();
-    updateAll();
-    const n = el('nm-' + it.id);
-    if (n) n.focus();
-  }));
-  function markEdited() {
-    if (S.isExample) { S.isExample = false; }
+  function markChips() {
+    const cur = current();
+    document.querySelectorAll('#chips .chip').forEach((c) => c.classList.toggle('on', Math.abs(Number(c.dataset.v) - cur) < 0.001));
   }
 
-  function paintItem(it, r) {
-    const card = document.querySelector(`.item[data-id="${it.id}"]`);
-    if (!card) return;
-    const q = (s) => card.querySelector(s);
-    const srcLabel = { capa: 'Preço de capa', atual: 'Preço atual', recomendado: 'Preço recomendado' }[r.source];
-    q('.o-pk').textContent = srcLabel;
-    q('.o-price').textContent = brl(r.price);
-    q('.o-real').textContent = brl(r.real);
-    q('.o-split').textContent = `${brl(r.cost)} + ${brl(r.rateio)} frete`;
-    q('.o-profit').textContent = brl(r.profitU);
-    q('.o-profit').style.color = r.profitU < 0 ? 'var(--bad)' : '';
-    q('.o-margin').textContent = isFinite(r.margin) ? `${pct(r.margin * 100)} · ${mk(r.effMk)} do custo` : '';
-    if (isFinite(r.maxDisc) && r.maxDisc > 0) {
-      q('.o-disc').textContent = pct(r.maxDisc * 100);
-      q('.o-minp').textContent = `até ${brl(r.minPrice)}`;
+  function update() {
+    const cost = num(el('in-cost').value);
+    const freight = num(el('in-freight').value);
+    const items = Math.floor(num(el('in-items').value));
+    const freightUnit = freight > 0 && items > 0 ? freight / items : 0;
+    const unitCost = cost + freightUnit;
+
+    let exact = 0;
+    if (S.mode === 'markup') exact = unitCost * S.markup;
+    else exact = unitCost / (1 - S.margem / 100);
+    const price = preco90(exact);
+    const profit = price - unitCost;
+
+    el('out-freight-unit').textContent = brl(freightUnit);
+    el('b-cost').textContent = brl(cost);
+    el('b-freight').textContent = brl(freightUnit);
+    el('b-total').textContent = brl(unitCost);
+    el('b-profit').textContent = brl(profit > 0 ? profit : 0);
+    el('out-price').textContent = brl(price);
+    el('out-exact').textContent = price > 0 ? `Valor calculado: ${brl(exact)}, arredondado para ,90` : '';
+
+    // Equivalência markup <-> margem, em palavras simples
+    if (S.mode === 'markup') {
+      const m = (1 - 1 / S.markup) * 100;
+      el('equiv').innerHTML = `Markup <strong>${dec(S.markup, 2)}x</strong> = o custo vezes ${dec(S.markup, 2)}. Isso deixa <strong>${dec(m, 1)}%</strong> do preço como lucro.`;
     } else {
-      q('.o-disc').textContent = isFinite(r.maxDisc) ? 'Nenhum' : '—';
-      q('.o-minp').textContent = isFinite(r.minPrice) ? `mínimo ${brl(r.minPrice)}` : '';
+      const k = 1 / (1 - S.margem / 100);
+      el('equiv').innerHTML = `Margem <strong>${dec(S.margem, 0)}%</strong> = de cada R$ 100 vendidos, R$ ${dec(S.margem, 0)} são lucro. É o mesmo que markup <strong>${dec(k, 2)}x</strong>.`;
     }
-    const chip = q('.o-chip');
-    chip.className = 'chip o-chip ' + r.status;
-    chip.textContent = r.status === 'ok' ? 'Na meta' : r.status === 'warn' ? 'Abaixo da meta' : 'Prejuízo';
 
-    const note = q('.o-note');
-    let html = '';
-    let warn = false;
-    if (!(r.cost > 0)) {
-      html = 'Informe o custo unitário da nota para calcular.';
-    } else if (it.cat === 'livro') {
-      if (r.ref > 0) {
-        html = `Comprado com <strong>${pct(r.buyDisc * 100)}</strong> de desconto sobre a capa.`;
-        if (r.status !== 'ok') {
-          warn = true;
-          html += ` Para bater a meta, negocie pelo menos <strong>${pct(r.needDisc * 100)}</strong> com a editora, ou venda a <strong>${brl(r.recommended)}</strong>.`;
-        }
-      } else {
-        html = `Sem preço de capa informado. Usando o preço recomendado de <strong>${brl(r.recommended)}</strong>.`;
-      }
-    } else {
-      const base = mk(Math.max(1, num(S.baseMarkup)));
-      html = `Com ${base}: <strong>${brl(r.pBase)}</strong>, lucro de <strong>${pct(r.mBase * 100)}</strong>.`;
-      if (r.ref > 0) html += ` Recomendado: <strong>${brl(r.recommended)}</strong>.`;
-      if (r.ref > 0 && r.status !== 'ok') warn = true;
-    }
-    note.className = 'note o-note' + (warn ? ' warn' : '');
-    note.innerHTML = html;
-  }
-
-  // ---------- leitura ----------
-  function insights(c) {
-    const t = num(S.target) / 100;
-    const base = Math.max(1, num(S.baseMarkup));
-    const mkFor = (cat) => {
-      const v = varShare(cat, c);
-      const dT = 1 - v - t;
-      return { v, rec: dT > 0.01 ? 1 / dT : NaN, even: 1 - v > 0.01 ? 1 / (1 - v) : NaN, atBase: 1 - 1 / base - v };
-    };
-    const nat = mkFor('natural');
-    el('i-nat-mk').textContent = mk(nat.rec);
-    el('i-nat-sub').innerHTML = isFinite(nat.rec)
-      ? `Empata em <strong>${mk(nat.even)}</strong>. Com ${mk(base)} o lucro é <strong style="color:${nat.atBase < t ? 'var(--bad)' : 'var(--ok)'}">${pct(nat.atBase * 100)}</strong>.`
-      : 'Taxas + impostos + fixas + lucro passam de 99%. Revise as premissas.';
-
-    const out = mkFor('outro');
-    el('i-out-mk').textContent = mk(out.rec);
-    el('i-out-sub').innerHTML = isFinite(out.rec) ? `Empata em <strong>${mk(out.even)}</strong>. Com ${mk(base)} o lucro é <strong>${pct(out.atBase * 100)}</strong>.` : '';
-
-    const vL = varShare('livro', c);
-    const f = c.extrasPct / 100;
-    const need = 1 - (1 - vL - t) / (1 + f);
-    el('i-book-disc').textContent = isFinite(need) ? pct(need * 100, 0) : '—';
-    el('i-book-sub').innerHTML = `Sobre a capa, com o frete desta NF (<strong>${pct(c.extrasPct)}</strong> do valor). Abaixo disso o livro fica fora da meta.`;
-
-    // composição por R$100 — produto natural no preço recomendado
-    const parts = isFinite(nat.rec)
-      ? { goods: (1 - nat.v - t) * 100, card: c.fee, tax: num(S.tax.natural), fixed: c.fixed, profit: t * 100 }
-      : null;
-    const keys = ['goods', 'card', 'tax', 'fixed', 'profit'];
-    keys.forEach((k) => {
-      const seg = el('cs-' + k);
-      const val = parts ? Math.max(0, parts[k]) : 0;
-      seg.style.width = val + '%';
-      seg.textContent = val >= 8 ? 'R$ ' + val.toFixed(0) : '';
-      el('cl-' + k).textContent = parts ? brl(val) : '—';
-    });
-    el('comp-note').textContent = parts
-      ? `No preço recomendado (${mk(nat.rec)}), sobram ${brl(parts.goods)} de cada R$ 100 para pagar a mercadoria e o frete. Com ${mk(base)}, sobram ${brl(100 / base)}.`
-      : '';
-  }
-
-  // ---------- atualização geral ----------
-  function updateAll() {
-    const c = ctx();
-    el('fixed-pct').textContent = pct(c.fixed);
-    el('nf-value').textContent = brl(c.sumValue);
-    el('nf-pct').textContent = pct(c.extrasPct);
-    el('nf-tag').textContent = S.isExample ? 'Exemplo. Substitua pelos itens da sua nota.' : `${S.items.length} ${S.items.length === 1 ? 'item' : 'itens'}`;
-    insights(c);
-
-    let rev = 0, cost = 0, ded = 0, profit = 0;
-    S.items.forEach((it) => {
-      const r = calc(it, c);
-      paintItem(it, r);
-      if (isFinite(r.price) && r.cost > 0) {
-        rev += r.price * r.qty;
-        cost += r.real * r.qty;
-        ded += r.price * r.v * r.qty;
-        profit += r.profitU * r.qty;
-      }
-    });
-    el('t-rev').textContent = brl(rev);
-    el('t-cost').textContent = brl(cost);
-    el('t-ded').textContent = brl(ded);
-    el('t-profit').textContent = brl(profit);
-    el('t-profit').style.color = profit < 0 ? 'var(--bad)' : 'var(--ok)';
-    el('t-margin').textContent = rev > 0 ? `${pct((profit / rev) * 100)} da venda` : '';
+    // Avisos
+    const msg = el('out-msg');
+    let text = '';
+    if (!(cost > 0)) text = 'Digite o valor do produto na nota (passo 1).';
+    else if (freight > 0 && !(items > 0)) text = 'Falta a quantidade de itens da nota (passo 2) para dividir o frete.';
+    msg.textContent = text;
+    msg.hidden = !text;
     save();
   }
 
-  // ---------- ações ----------
-  function toast(msg) {
-    const t = el('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toast._t);
-    toast._t = setTimeout(() => t.classList.remove('show'), 2600);
+  function setValue(v) {
+    if (S.mode === 'markup') S.markup = Math.min(10, Math.max(1, v));
+    else S.margem = Math.min(90, Math.max(1, v));
   }
 
-  let armed = null;
-  el('btn-reset').addEventListener('click', () => {
-    const b = el('btn-reset');
-    if (!armed) {
-      b.textContent = 'Confirmar: apagar tudo?';
-      b.classList.add('btn-danger-armed');
-      armed = setTimeout(() => { armed = null; b.textContent = 'Restaurar exemplo'; b.classList.remove('btn-danger-armed'); }, 3500);
-      return;
-    }
-    clearTimeout(armed); armed = null;
-    b.textContent = 'Restaurar exemplo'; b.classList.remove('btn-danger-armed');
-    S = example();
-    boot();
-    toast('Exemplo restaurado.');
+  ['in-cost', 'in-freight', 'in-items'].forEach((id) => el(id).addEventListener('input', update));
+  el('in-adjust').addEventListener('input', (e) => {
+    const v = num(e.target.value);
+    if (v > 0) { setValue(v); markChips(); update(); }
+  });
+  el('in-adjust').addEventListener('blur', showAdjust);
+  el('tab-markup').addEventListener('click', () => { S.mode = 'markup'; showAdjust(); update(); });
+  el('tab-margin').addEventListener('click', () => { S.mode = 'margin'; showAdjust(); update(); });
+  el('btn-minus').addEventListener('click', () => { setValue(current() - (S.mode === 'markup' ? 0.05 : 1)); showAdjust(); update(); });
+  el('btn-plus').addEventListener('click', () => { setValue(current() + (S.mode === 'markup' ? 0.05 : 1)); showAdjust(); update(); });
+  el('chips').addEventListener('click', (e) => {
+    const c = e.target.closest('.chip');
+    if (!c) return;
+    setValue(Number(c.dataset.v)); showAdjust(); update();
   });
 
-  function summary() {
-    const c = ctx();
-    const p = PAY.find((x) => x.id === S.pay.method);
-    const lines = [
-      '*Precificação NT Store*',
-      `Recebimento: ${p.label} (${pct(c.fee)}) · Despesas fixas: ${pct(c.fixed)} · Lucro alvo: ${pct(num(S.target))}`,
-      `Frete + outros da NF: ${brl(c.extras)} (${pct(c.extrasPct)} do valor)`,
-      ''
-    ];
-    let rev = 0, profit = 0;
-    S.items.forEach((it) => {
-      const r = calc(it, c);
-      if (!(r.cost > 0)) return;
-      const src = r.source === 'capa' ? 'capa' : r.source === 'atual' ? 'atual' : 'recomendado';
-      lines.push(`• ${it.name || 'Item'} (${CATS[it.cat]}) · ${r.qty} un.`);
-      lines.push(`  Custo real ${brl(r.real)} · Venda ${brl(r.price)} (${src}) · Lucro ${brl(r.profitU)}/un. (${pct(r.margin * 100)})`);
-      if (isFinite(r.price)) { rev += r.price * r.qty; profit += r.profitU * r.qty; }
-    });
-    lines.push('');
-    lines.push(`*Total:* venda ${brl(rev)} · lucro ${brl(profit)}${rev > 0 ? ` (${pct((profit / rev) * 100)})` : ''}`);
-    return lines.join('\n');
+  function toast(t) {
+    const n = el('toast');
+    n.textContent = t;
+    n.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => n.classList.remove('show'), 2200);
   }
   el('btn-copy').addEventListener('click', () => {
-    const text = summary();
+    const text = el('out-price').textContent;
     const fallback = () => {
       const ta = document.createElement('textarea');
       ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -830,20 +377,25 @@
       let ok = false;
       try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
       document.body.removeChild(ta);
-      toast(ok ? 'Resumo copiado. Cole no WhatsApp.' : 'Não deu para copiar automaticamente.');
+      toast(ok ? 'Preço copiado' : 'Não deu para copiar. Anote o preço.');
     };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => toast('Resumo copiado. Cole no WhatsApp.')).catch(fallback);
-    } else fallback();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => toast('Preço copiado')).catch(fallback);
+    else fallback();
+  });
+  el('btn-next').addEventListener('click', () => {
+    el('in-cost').value = '';
+    update();
+    el('in-cost').focus();
+    toast('Pronto para o próximo produto');
   });
 
-  function boot() {
-    renderPay();
-    fillSimple();
-    renderItems();
-    updateAll();
-  }
-  boot();
+  // Exemplo inicial para mostrar como funciona
+  if (!el('in-cost').value) el('in-cost').value = '18,50';
+  if (!el('in-freight').value) el('in-freight').value = '211,77';
+  if (!el('in-items').value) el('in-items').value = '60';
+
+  showAdjust();
+  update();
 })();
 </script>
 </body>

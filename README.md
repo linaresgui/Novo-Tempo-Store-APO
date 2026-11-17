@@ -1,11 +1,16 @@
 # NT Store — Ferramentas
 
-## Calculadora de precificação
+## Calculadora de preço de venda (caixa)
 
 `calculadora-precificacao/index.html` — abra no navegador, não precisa instalar nada.
 
-- Lança os itens de uma nota fiscal e divide frete e outros custos **pelo valor** de cada item (ou por unidade).
-- Livros/Bíblias: vendidos pelo **preço de capa**; mostra o lucro que sobra e o desconto mínimo a negociar com a editora.
-- Produtos naturais e outros: calcula o **markup recomendado** (`custo real ÷ (1 − maquininha − impostos − fixas − lucro alvo)`) e compara com o 1,60x atual.
-- Premissas padrão (editáveis): parcelado até 10x recebendo em 15 dias = 13%; impostos 0% livros / 6% demais; despesas fixas R$ 6.000 sobre faturamento de R$ 40.000; lucro alvo 10%.
-- Os valores do exemplo são fictícios. Taxas de cartão são médias de mercado estimadas; confirme com o contrato da maquininha e as alíquotas com o contador.
+1. Valor de 1 unidade na nota fiscal.
+2. Frete total da nota e quantidade total de itens da nota → frete por unidade (frete ÷ itens).
+3. Markup (padrão 1,60x) ou margem (padrão 40%).
+
+Preço = (valor na NF + frete por unidade) × markup, ou ÷ (1 − margem), arredondado para cima em ,90.
+Os padrões e atalhos ficam no topo do `<script>` (`PADRAO`, `MARKUP_ATALHOS`, `MARGEM_ATALHOS`) e as cores no `:root` do CSS.
+
+## Calculadora completa (gerência)
+
+`calculadora-precificacao/avancada.html` — nota fiscal com vários itens, preço de capa de livros, maquininha, impostos, despesas fixas e markup recomendado.
