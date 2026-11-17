@@ -14,17 +14,18 @@
   :root {
     --brand: #2f4a35;        /* verde escuro dos destaques */
     --brand-2: #5d7c3a;      /* verde oliva */
-    --brand-soft: #edf2e3;
+    --brand-soft: #ecede0;
     --apple: #7cb82f;        /* verde maçã */
     --gold: #c9a45c;         /* dourado */
-    --gold-soft: #f6efdf;
+    --gold-soft: #f3e8d2;
     --marsala: #7b2d3b;
     --ink: #1c1f1a;          /* preto */
-    --bg: #f4f5ef;
-    --surface: #ffffff;
-    --line: #dbe0d0;
+    --bg: #f5efe3;          /* bege papel */
+    --bg-2: #ede4d2;
+    --surface: #fffcf6;     /* branco creme */
+    --line: #e5dac5;
     --fg: #1c1f1a;
-    --muted: #5d6656;
+    --muted: #6b6454;
     --on-brand: #ffffff;
     --ok: #4f8a1f;
     --bad: #7b2d3b;
@@ -32,28 +33,18 @@
     --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --font-num: 'Space Grotesk', 'Inter', system-ui, sans-serif;
     --r: 16px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --brand: #24392a; --brand-2: #a3c46a; --brand-soft: #24301c; --apple: #95d14a;
-      --gold: #d8b673; --gold-soft: #3a3120; --marsala: #e08a98; --ink: #1c1f1a;
-      --bg: #131611; --surface: #1b2018; --line: #333b2c; --fg: #ecefe6; --muted: #a3ab98;
-      --on-brand: #ffffff; --ok: #95d14a; --bad: #e08a98; --bad-soft: #3a1c22;
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --brand: #24392a; --brand-2: #a3c46a; --brand-soft: #24301c; --apple: #95d14a;
-    --gold: #d8b673; --gold-soft: #3a3120; --marsala: #e08a98; --ink: #1c1f1a;
-    --bg: #131611; --surface: #1b2018; --line: #333b2c; --fg: #ecefe6; --muted: #a3ab98;
-    --on-brand: #ffffff; --ok: #95d14a; --bad: #e08a98; --bad-soft: #3a1c22;
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   * { box-sizing: border-box; }
+  html { background: var(--bg); }
   body {
     margin: 0;
-    background: var(--bg);
+    background:
+      radial-gradient(120% 60% at 100% 0%, var(--gold-soft) 0%, transparent 60%),
+      radial-gradient(90% 50% at 0% 100%, var(--brand-soft) 0%, transparent 65%),
+      var(--bg);
+    min-height: 100%;
     color: var(--fg);
     font-family: var(--font-ui);
     font-size: 16px;
@@ -166,13 +157,30 @@
     opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none; z-index: 20;
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  /* Grade de pontos dourados, como nos posts da loja */
+  .dots { position: relative; }
+  .dots::after {
+    content: ""; position: absolute; pointer-events: none;
+    background-image: radial-gradient(var(--gold) 1.6px, transparent 1.9px);
+    background-size: 12px 12px;
+  }
+  header.dots::after { left: 22px; top: 22px; width: 48px; height: 48px; opacity: 0.7; }
+  header .logo { position: relative; z-index: 1; }
+  header > div:last-child { position: relative; z-index: 1; padding-left: 14px; }
+  .result { position: relative; overflow: hidden; }
+  .result::after { right: 14px; top: 14px; width: 60px; height: 60px; opacity: 0.45; }
+  .result > * { position: relative; z-index: 1; }
+  .step { box-shadow: 0 1px 0 var(--line), 0 6px 18px rgba(92, 72, 30, 0.06); }
+  .tip { background: var(--bg-2); border-color: transparent; }
+  .freight-out { background: var(--gold-soft); }
+  .tabs { background: var(--bg-2); }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
 <main class="wrap">
 
-  <header>
+  <header class="dots">
     <div class="logo" aria-hidden="true">NT</div>
     <div>
       <h1>Preço de Venda NT Store</h1>
@@ -219,7 +227,7 @@
     <p class="equiv" id="equiv"></p>
   </section>
 
-  <section class="result" aria-live="polite" aria-labelledby="res-k">
+  <section class="result dots" aria-live="polite" aria-labelledby="res-k">
     <span class="k" id="res-k">Vender por</span>
     <span class="price" id="out-price">R$ 0,00</span>
     <span class="exact" id="out-exact"></span>
