@@ -10,40 +10,43 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap">
 <style>
   /* Layout: uma coluna, três passos numerados (nota, frete, lucro) e o preço final em destaque. Feito para o caixa. */
-  /* Cores da marca: troque estes valores se a NT Store tiver os códigos oficiais. */
+  /* Paleta NT Store (Instagram @ntstoreriopreto): verde escuro com dourado, verde oliva, verde maçã, marsala, preto. */
   :root {
-    --brand: #0b3a6e;        /* azul-marinho */
-    --brand-2: #1767c2;      /* azul */
-    --brand-soft: #e9f2fc;
-    --gold: #f4b400;         /* amarelo de destaque */
-    --gold-soft: #fff5d6;
-    --bg: #f3f6fa;
+    --brand: #2f4a35;        /* verde escuro dos destaques */
+    --brand-2: #5d7c3a;      /* verde oliva */
+    --brand-soft: #edf2e3;
+    --apple: #7cb82f;        /* verde maçã */
+    --gold: #c9a45c;         /* dourado */
+    --gold-soft: #f6efdf;
+    --marsala: #7b2d3b;
+    --ink: #1c1f1a;          /* preto */
+    --bg: #f4f5ef;
     --surface: #ffffff;
-    --line: #d5dfea;
-    --fg: #10233a;
-    --muted: #5b6b7e;
+    --line: #dbe0d0;
+    --fg: #1c1f1a;
+    --muted: #5d6656;
     --on-brand: #ffffff;
-    --ok: #18794e;
-    --bad: #c0261b;
-    --bad-soft: #fde7e4;
+    --ok: #4f8a1f;
+    --bad: #7b2d3b;
+    --bad-soft: #f6e6e8;
     --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --font-num: 'Space Grotesk', 'Inter', system-ui, sans-serif;
     --r: 16px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --brand: #0f2f55; --brand-2: #6aa8f0; --brand-soft: #142a44;
-      --gold: #ffc83d; --gold-soft: #3a2f10;
-      --bg: #0b1420; --surface: #121e2c; --line: #263649; --fg: #e8eef5; --muted: #9aabbe;
-      --on-brand: #ffffff; --ok: #5fd29b; --bad: #ff8b80; --bad-soft: #3c1714;
+      --brand: #24392a; --brand-2: #a3c46a; --brand-soft: #24301c; --apple: #95d14a;
+      --gold: #d8b673; --gold-soft: #3a3120; --marsala: #e08a98; --ink: #1c1f1a;
+      --bg: #131611; --surface: #1b2018; --line: #333b2c; --fg: #ecefe6; --muted: #a3ab98;
+      --on-brand: #ffffff; --ok: #95d14a; --bad: #e08a98; --bad-soft: #3a1c22;
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --brand: #0f2f55; --brand-2: #6aa8f0; --brand-soft: #142a44;
-    --gold: #ffc83d; --gold-soft: #3a2f10;
-    --bg: #0b1420; --surface: #121e2c; --line: #263649; --fg: #e8eef5; --muted: #9aabbe;
-    --on-brand: #ffffff; --ok: #5fd29b; --bad: #ff8b80; --bad-soft: #3c1714;
+    --brand: #24392a; --brand-2: #a3c46a; --brand-soft: #24301c; --apple: #95d14a;
+    --gold: #d8b673; --gold-soft: #3a3120; --marsala: #e08a98; --ink: #1c1f1a;
+    --bg: #131611; --surface: #1b2018; --line: #333b2c; --fg: #ecefe6; --muted: #a3ab98;
+    --on-brand: #ffffff; --ok: #95d14a; --bad: #e08a98; --bad-soft: #3a1c22;
     color-scheme: dark;
   }
 
@@ -147,7 +150,11 @@
     font: inherit; font-size: 15px; font-weight: 700; padding: 13px; border-radius: 12px; cursor: pointer;
     border: 2px solid transparent;
   }
-  .btn-gold { background: var(--gold); color: #10233a; }
+  .btn-gold { background: var(--gold); color: var(--ink); }
+  .logo { box-shadow: inset 0 0 0 3px var(--gold); }
+  .n { background: var(--apple); color: #ffffff; }
+  .result .msg { background: var(--marsala); color: #ffffff; }
+  .chip.on { border-color: var(--apple); }
   .btn-line { background: transparent; color: var(--on-brand); border-color: rgba(255,255,255,0.45); }
 
   .tip { font-size: 14px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; }
